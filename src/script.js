@@ -59,6 +59,42 @@ function dispararConfeti() {
 }
 
 
+// Generador de corazones flotantes de fondo
+function crearCorazonFlotante() {
+  const container = document.getElementById("heartsContainer");
+  if (!container) return;
+
+  const heart = document.createElement("div");
+  heart.className = "floating-heart";
+  
+  // Variedad de emojis de corazones y destellos
+  const emojis = ["❤️", "💖", "💕", "💗", "✨"];
+  const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+  heart.innerHTML = randomEmoji;
+
+  // Variaciones aleatorias
+  const size = Math.random() * 20 + 12; // Entre 12px y 32px
+  const startX = Math.random() * 100; // Entre 0% y 100% de la pantalla
+  const drift = (Math.random() - 0.5) * 120; // Desplazamiento horizontal (-60px a 60px)
+  const rotation = (Math.random() - 0.5) * 90; // Rotación (-45deg a 45deg)
+  const duration = Math.random() * 6 + 6; // Duración (entre 6s y 12s)
+  const maxOpacity = Math.random() * 0.35 + 0.15; // Opacidad máxima entre 0.15 y 0.50
+
+  heart.style.left = `${startX}%`;
+  heart.style.setProperty("--heart-size", `${size}px`);
+  heart.style.setProperty("--duration", `${duration}s`);
+  heart.style.setProperty("--drift", `${drift}px`);
+  heart.style.setProperty("--rotation", `${rotation}deg`);
+  heart.style.setProperty("--max-opacity", maxOpacity);
+
+  container.appendChild(heart);
+
+  // Eliminar el elemento al finalizar la animación para optimizar rendimiento
+  setTimeout(() => {
+    heart.remove();
+  }, duration * 1000 + 1000);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   
   typeWriter();
@@ -71,4 +107,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   setInterval(dispararConfeti, 2000);
+
+  // Iniciar la generación de corazones de fondo
+  setInterval(crearCorazonFlotante, 400);
+
+  // Generar corazones iniciales dispersos
+  for (let i = 0; i < 15; i++) {
+    setTimeout(crearCorazonFlotante, Math.random() * 5000);
+  }
 });

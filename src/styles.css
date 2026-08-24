@@ -187,3 +187,44 @@ body {
         font-size: 0.75rem;
     }
 }
+
+/* =========================================
+   EFECTO DE CORAZONES FLOTANTES DE FONDO 
+   ========================================= */
+.bg-hearts-container {
+    position      : fixed;
+    top           : 0;
+    left          : 0;
+    width         : 100vw;
+    height        : 100vh;
+    overflow      : hidden;
+    pointer-events: none; /* No bloquea clics del usuario */
+    z-index       : 1;    /* Por detrás de la tarjeta (.card tiene z-index: 10) */
+}
+
+.floating-heart {
+    position  : absolute;
+    bottom    : -50px;
+    font-size : var(--heart-size, 20px);
+    opacity   : 0;
+    color     : var(--pink-primary);
+    filter    : drop-shadow(0 0 5px rgba(255, 75, 130, 0.4));
+    animation : floatUp var(--duration, 8s) linear forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity  : 0;
+    }
+    10% {
+        opacity  : var(--max-opacity, 0.4);
+    }
+    90% {
+        opacity  : var(--max-opacity, 0.4);
+    }
+    100% {
+        transform: translateY(-115vh) translateX(var(--drift, 50px)) rotate(var(--rotation, 45deg));
+        opacity  : 0;
+    }
+}
